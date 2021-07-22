@@ -1,0 +1,18 @@
+plugins {
+    id 'java-library'
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+}
+
+dependencies {
+    implementation project(path: ':lib_anotations')
+//    auto-service：用于自动识别注解处理器的功能
+    implementation 'com.google.auto.service:auto-service:1.0'
+    annotationProcessor 'com.google.auto.service:auto-service:1.0'
+//    javapoet 用于生成java代码的工具sdk
+    implementation 'com.squareup:javapoet:1.13.0'
+}
+
