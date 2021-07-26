@@ -1,0 +1,5 @@
+rootProject.name = "ViewFinder"
+include ':app'
+include ':viewfinder-annotation'
+include ':viewfinder-compiler'
+include ':viewfinder'
