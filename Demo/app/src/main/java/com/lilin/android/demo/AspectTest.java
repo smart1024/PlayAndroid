@@ -35,6 +35,7 @@ import org.aspectj.lang.annotation.Pointcut;
  *     Pointcut Method
  * }
  * Call（After）
+ *
  * //对于Execution来说：
  * Pointcut{
  *   execution（Before）
@@ -110,5 +111,41 @@ public class AspectTest {
     @Before("AspectAnnotation()")
     public void testAspectAnnotation(JoinPoint point){
         Log.e(TAG, point.getSignature().getName() + "-Before ");
+    }
+
+    /**
+     * JoinPoint call 类型
+     * @param joinPoint
+     * @throws Throwable
+     * Call（Before）
+     */
+    @Before("call(* com.lilin.android.demo.MainActivity.testCall())")
+    public void methodTestCall(JoinPoint joinPoint) {
+        String key = joinPoint.getSignature().toString();
+        Log.e(TAG, "methodTestCall: " + key);
+    }
+
+    // 在testWithInCode2方法内
+    @Pointcut("withincode(* com.lilin.android.demo.MainActivity.testWithInCode2())")
+    public void invokeWithInCode2() {
+    }
+
+    // 在printWithInCode方法内,被testWithInCode1和testWithInCode2都调用的方法拦截
+    @Pointcut("call(* com.lilin.android.demo.MainActivity.printWithInCode())")
+    public void invokePrintWithInCode() {
+    }
+
+    /**
+     * 仅testWithInCode2被调用时，才切入代码
+     */
+    @Pointcut("invokeWithInCode2() && invokePrintWithInCode()")
+    public void invokeAOPOnlyInTestWithInCode2(){
+
+    }
+
+    @Before("invokeAOPOnlyInTestWithInCode2()")
+    public void beforeInvokePrintWithInCode2(JoinPoint joinPoint) {
+        String key = joinPoint.getSignature().toString();
+        Log.e(TAG, "beforeInvokePrintWithInCode2: " + key);
     }
 }

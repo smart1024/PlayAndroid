@@ -28,7 +28,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Log.e(TAG,"onCreate");
-        testAOP();
         AnnotationTest();
     }
 
@@ -50,10 +49,53 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
+     * 测试AOP
+     * @param view
+     */
+    public void testAop(View view) {
+        testAOP();
+    }
+    /**
      * 测试JointPoint Around
      */
-    private void testAOP() {
+    public void testAOP() {
         Log.e(TAG,"调用原始方法testAOP");
     }
 
+
+    public void testCall(View view) {
+        testCall();
+    }
+
+    /**
+     * 测试call调用
+     */
+    public void testCall() {
+        Log.e(TAG,"调用原始方法testCall");
+    }
+
+
+    public void testWithInCode(View view) {
+        testWithInCode();
+    }
+
+    /**
+     * 测试withincode类型
+     */
+    private void testWithInCode() {
+        testWithInCode1();
+        testWithInCode2();
+    }
+
+    private void testWithInCode2() {
+        printWithInCode();
+    }
+
+    private void testWithInCode1() {
+        printWithInCode();
+    }
+
+    private void printWithInCode() {
+        Log.e(TAG,"调用原始方法printWithInCode");
+    }
 }
