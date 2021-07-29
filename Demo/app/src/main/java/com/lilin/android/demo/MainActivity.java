@@ -21,7 +21,8 @@ import androidx.appcompat.app.AppCompatActivity;
  * @After
  * @Around
  * @Pointcut
- * @AfterThrowing 会给指定包下所有方法加上try catch语句，
+ * @AfterThrowing 会给指定包下所有方法加上try catch语句，但是异常仍然会被抛出，已经有try
+ *
  * JoinPoint类型：
  * call  调用函数前后
  * execution 函数内部前后
