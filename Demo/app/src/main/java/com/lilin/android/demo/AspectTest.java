@@ -5,6 +5,7 @@ import android.util.Log;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.After;
+import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
@@ -147,5 +148,11 @@ public class AspectTest {
     public void beforeInvokePrintWithInCode2(JoinPoint joinPoint) {
         String key = joinPoint.getSignature().toString();
         Log.e(TAG, "beforeInvokePrintWithInCode2: " + key);
+    }
+
+    @AfterThrowing(pointcut = "execution(* com.lilin.android.demo.*.*(..))", throwing = "exception")
+    public void catchExceptionMethod(Exception exception) {
+        String message = exception.toString();
+        Log.e(TAG, "catchExceptionMethod: " + message);
     }
 }

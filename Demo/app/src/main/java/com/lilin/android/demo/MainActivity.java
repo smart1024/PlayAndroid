@@ -16,7 +16,16 @@ import androidx.appcompat.app.AppCompatActivity;
  * Javassist：
  * 修改原dex文件
  * 使用场景:热更新（可以在编译后，打包Dex之前干事情，可以突破一下限制）
- *
+ * Advice类型：
+ * @Before
+ * @After
+ * @Around
+ * @Pointcut
+ * @AfterThrowing 会给指定包下所有方法加上try catch语句，
+ * JoinPoint类型：
+ * call  调用函数前后
+ * execution 函数内部前后
+ * withincode：结合Pointcut实现切点进准匹配或者过滤
  * 参考资料：
  * https://www.jianshu.com/p/e737c187e0c2
  * https://www.jianshu.com/p/5c9f1e8894ec
@@ -97,5 +106,14 @@ public class MainActivity extends AppCompatActivity {
 
     private void printWithInCode() {
         Log.e(TAG,"调用原始方法printWithInCode");
+    }
+
+    public void testAfterThrowing(View view) {
+        testAfterThrowing();
+    }
+
+    private void testAfterThrowing() {
+        View view = null;
+        view.animate();
     }
 }
