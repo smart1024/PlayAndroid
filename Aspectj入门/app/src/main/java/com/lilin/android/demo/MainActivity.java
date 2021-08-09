@@ -26,7 +26,8 @@ import androidx.appcompat.app.AppCompatActivity;
  * JoinPoint类型：
  * call  调用函数前后
  * execution 函数内部前后
- * withincode：结合Pointcut实现切点进准匹配或者过滤
+ * withincode：类内部多个方法场景下 结合Pointcut实现切点进准匹配或者过滤某个方法
+ * within:多个类场景下精准匹配某个类
  * 参考资料：
  * https://www.jianshu.com/p/e737c187e0c2
  * https://www.jianshu.com/p/5c9f1e8894ec
