@@ -1,0 +1,5 @@
+rootProject.name = "MyApplication"
+include ':app'
+include ':laop-annotation'
+include ':laop-runtime'
+include ':laop-plugin'
