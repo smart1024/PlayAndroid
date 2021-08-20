@@ -90,6 +90,7 @@ public class AspectTest {
     /**
      * 先定义Pointcuts，并声明要监控的方法名 * * 第一个*代码匹配任意访问权限,第二*匹配任意返回值，必不可少否则报错
      * 然后在Before或者其它Advice里面添加切入代码，即可完成切入
+     * 匹配被DebugTool注解的方法
      */
     @Pointcut("execution(@com.lilin.android.demo.DebugTool * *(..))")
     public void DebugToolMethod() {
@@ -103,7 +104,7 @@ public class AspectTest {
 
 
 
-    //定义一个使用该注解的Pointcut
+    //定义一个使用该注解的Pointcut 匹配被AspectAnnotation注解的方法
     @Pointcut("execution(@com.lilin.android.demo.AspectAnnotation * *(..))")
     public void AspectAnnotation(){
 

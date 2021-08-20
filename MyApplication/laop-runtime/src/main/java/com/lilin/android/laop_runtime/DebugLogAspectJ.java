@@ -28,6 +28,30 @@ import java.util.concurrent.TimeUnit;
  * 类说明：
  * https://blog.csdn.net/zhongwn/article/details/80410313?utm_source=blogxgwz8
  * https://www.jianshu.com/p/044c149caf7f
+ *
+ * @annotation 获取注解的值
+ * 这里通过JoinPoint拿到对应的方法，再通过反射获取该方法的注解的值。
+ *    @Pointcut("@annotation(com.zx.aop1.CheckAop)")
+ *     private void aAnnotation1() {
+ *     }
+ *
+ *  @After("aAnnotation1()")
+ *     public void testaAnnotation(JoinPoint joinPoint) {
+ *     MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
+ *         Method method = methodSignature.getMethod();
+ *         CheckAop checkAop = method.getAnnotation(CheckAop.class);
+ *         Log.e(TAG, "testaAnnotation--: "+checkAop.value() );
+ *     }
+ *  此外还有一种简单的方法来获取注解值
+ *    @Pointcut(value = "@annotation(checkAop)")
+ *     private void aAnnotation2(CheckAop checkAop) {
+ *     }
+ *
+ *  @After("aAnnotation2(checkAop)")
+ *     public void testaAnnotation2(CheckAop checkAop) {
+ *         Log.e(TAG, "testaAnnotation2---: "+checkAop.value() );
+ *     }
+ * 注意事项:构建的时候 注意观察AS build 控制台打印信息，看有没有报错
  */
 
 @Aspect
@@ -44,7 +68,7 @@ public class DebugLogAspectJ {
     synthetic 是内部类编译后添加的修饰语，所以 !synthetic 表示非内部类的
     匹配带有注解DebugLog修饰的所有JPoint但不包括被synthetic修饰的方法(不包含编译器生成的方法)
      */
-    @Pointcut("execution(!synthetic * * (..) && withinAnnotatedClass())")
+    @Pointcut("execution(!synthetic * *(..)) && withinAnnotatedClass()")
     public void methodInsideAnnotatedType() {
 
     }
@@ -73,6 +97,8 @@ public class DebugLogAspectJ {
     public void constructor() {
     }
 
+
+    /**@annotation 获取注解的值*/
     @Around("(method() || constructor()) && @annotation(debugLog)")
     public Object logAndExecute(ProceedingJoinPoint joinPoint, DebugLog debugLog) throws Throwable {
         enterMethod(joinPoint, debugLog);

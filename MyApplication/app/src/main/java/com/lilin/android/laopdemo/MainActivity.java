@@ -7,7 +7,6 @@ import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.lilin.android.laop_annotation.DebugLog;
-import com.lilin.android.laop_runtime.XAOP;
 import com.lilin.android.laop_runtime.logger.XLogger;
 
 /**
@@ -20,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        XAOP.debug(true);
+
     }
 
     @DebugLog(priority = Log.ERROR)
