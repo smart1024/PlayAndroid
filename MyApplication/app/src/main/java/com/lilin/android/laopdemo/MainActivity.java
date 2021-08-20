@@ -10,7 +10,7 @@ import com.lilin.android.laop_annotation.DebugLog;
 import com.lilin.android.laop_runtime.logger.XLogger;
 
 /**
- * 1、掌握gradle插件定义  gradle uploadArchives生成gradle插件本地库
+ * 1、掌握gradle插件定义  gradle uploadArchives生成gradle插件本地库或者使用沪江的 aspectjx
  * 2、
  */
 public class MainActivity extends AppCompatActivity {
