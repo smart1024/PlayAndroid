@@ -42,6 +42,11 @@ fun main(){
         println(i)
     }
 
+    //downTo创建一个降序区间
+    for (i in 10 downTo 1){
+        println(i)
+    }
+
     //字符串模板
     println("large Number is $value")
 
