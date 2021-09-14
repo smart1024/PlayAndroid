@@ -8,6 +8,7 @@ import kotlin.math.max
  * @version 1.0
  * 包名： com.lilin.android.kotlin_helloworld
  * 类说明：在Android studio中独立运行kotlin代码
+ * new 选择File通常是用于编写Kotlin顶层函数和扩展函数的
  */
 
 /**
@@ -51,6 +52,15 @@ fun main(){
     println("large Number is $value")
 
     checkNumber(10)
+
+
+    /**
+     * 3、对象的定义
+     */
+    val p = Person()
+    p.name = "Jack"
+    p.age = 19;
+    p.eat()
 }
 
 /**
