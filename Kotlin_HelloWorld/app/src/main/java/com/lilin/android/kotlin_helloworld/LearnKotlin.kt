@@ -26,6 +26,22 @@ fun main(){
     val b = 37
     val c = 40
     val value = largeNumber(b,c)
+
+    //表示一个区间[0,10]代表双端闭区间
+    val range = 0..10
+
+    //for循环
+    for (i in range){
+        println(i)
+    }
+
+    //表示一个[0,10)
+    val range1 = 0 until 10
+    //forin默认递增1，step可指定递增大小
+    for (i in range1 step 2){
+        println(i)
+    }
+
     //字符串模板
     println("large Number is $value")
 
