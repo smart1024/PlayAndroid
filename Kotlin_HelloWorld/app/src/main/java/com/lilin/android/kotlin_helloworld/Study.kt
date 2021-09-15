@@ -9,4 +9,6 @@ package com.lilin.android.kotlin_helloworld
  */
 
 interface Study {
+    fun readBooks()
+    fun doHomeWork()
 }

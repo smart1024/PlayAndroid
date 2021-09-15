@@ -194,3 +194,10 @@ fun checkNumber(num:Number){
  *  请看Student1例子
  */
 
+
+/**
+ * 5、Kotlin接口
+ * 跟java类似
+ * java 继承使用extends，接口使用implements
+ * Kotlin 统一使用:(冒号)，中间用逗号隔开
+ */
