@@ -200,5 +200,5 @@ fun checkNumber(num:Number){
  * 跟java类似
  * 1）java 继承使用extends，接口使用implements
  * 2）Kotlin 统一使用:(冒号)，中间用逗号隔开
- * 3）没有主构造函数和接口继承时都不要()
+ * 3）没有主构造函数和接口继承时都不要()，接口是没有构造函数可调
  */
