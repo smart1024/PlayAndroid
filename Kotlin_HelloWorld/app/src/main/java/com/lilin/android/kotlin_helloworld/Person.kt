@@ -8,9 +8,10 @@ package com.lilin.android.kotlin_helloworld
  * 类说明：
  */
 
-class Person {
-    var name = ""
-    var age = 0
+open class Person(val name:String,val age:Int) {
+//    var name = ""
+//    var age = 0
+    constructor():this("",0)
     fun eat(){
         println("$name is eating,he is $age years old")
     }

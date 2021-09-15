@@ -9,7 +9,6 @@ import kotlin.math.max
  * 包名： com.lilin.android.kotlin_helloworld
  * 类说明：在Android studio中独立运行kotlin代码
  * new 选择File通常是用于编写Kotlin顶层函数和扩展函数的
- * git token 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
  */
 
 /**
@@ -56,11 +55,11 @@ fun main(){
 
 
     /**
-     * 3、对象的定义
+     * 4、对象的定义
      */
-    val p = Person()
-    p.name = "Jack"
-    p.age = 19;
+    val p = Person("Jack",19)
+//    p.name = "Jack"
+//    p.age = 19;
     p.eat()
 }
 
@@ -170,4 +169,28 @@ fun checkNumber(num:Number){
         else -> println("number not support")
     }
 }
+
+/**
+ * 4、Kotlin的继承和构造函数
+ *  1、Kotlin中的非抽象类默认不能被继承，相当于final类,要想被继承open关键字
+ *  2、java中的继承使用extends关键字，Kotlin用:类型()
+ *  3、class Student : Person()需要带上括号原因
+ *  主构造函数和次构造函数
+ *  主构造函数：每个类都带有默认的无参的主构造函数，当然你也可以指定参数，主构造函数特点是没有函数体
+ *  class Student(val sno:String,val grade:Int) : Person(){}
+ *  将学号和年级这两个字段都放到了主构造函数当中，这就表明在对Student类进行实例化的时候，必须传入构造函数中要求的所有参数
+ *  val student = Student("a123",5)
+ *  构造函数中的参数是在创建实例的时候传入的，不像之前的写法那样还得重新赋值，因此我们可以将参数全部声明成val
+ *
+ *  我们知道主构造函数没有函数体，如果想在主构造函数里添加逻辑怎么办？init代码块
+ *
+ *  子类必须调用父类的构造函数，具体调哪个构造函数通过Person()来指定
+ *  val student = Student("a123",5,"Jack",19)
+ *
+ *  4、次构造函数：
+ *  1）任何类只有一个主构造函数(也可以没有主构造函数)，次构造函数可以有多个
+ *  2）次构造函数必须调用主构造函数
+ *  5、没有主构造函数，只有次构造函数的情形
+ *  请看Student1例子
+ */
 
