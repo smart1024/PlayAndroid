@@ -9,6 +9,7 @@ import kotlin.math.max
  * 包名： com.lilin.android.kotlin_helloworld
  * 类说明：在Android studio中独立运行kotlin代码
  * new 选择File通常是用于编写Kotlin顶层函数和扩展函数的
+ * git token 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
  */
 
 /**
