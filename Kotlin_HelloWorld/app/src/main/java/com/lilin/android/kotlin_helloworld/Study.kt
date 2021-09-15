@@ -10,5 +10,7 @@ package com.lilin.android.kotlin_helloworld
 
 interface Study {
     fun readBooks()
-    fun doHomeWork()
+    fun doHomeWork(){ //接口函数的默认实现
+        println("do homework default implementation")
+    }
 }

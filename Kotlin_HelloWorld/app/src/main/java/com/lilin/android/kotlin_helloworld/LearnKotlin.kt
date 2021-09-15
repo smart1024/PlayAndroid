@@ -61,6 +61,15 @@ fun main(){
 //    p.name = "Jack"
 //    p.age = 19;
     p.eat()
+
+    val student = Student("Jack",19)
+    doStudy(student)
+}
+
+/**多态的使用*/
+fun doStudy(study: Study){
+    study.readBooks()
+    study.doHomeWork()
 }
 
 /**
@@ -201,4 +210,22 @@ fun checkNumber(num:Number){
  * 1）java 继承使用extends，接口使用implements
  * 2）Kotlin 统一使用:(冒号)，中间用逗号隔开
  * 3）没有主构造函数和接口继承时都不要()，接口是没有构造函数可调
+ * 4）Kotlin接口的中的函数进行默认实现，JDK1.8也支持此功能 见Study类实现
+ */
+
+/**
+ * 6、Kotlin函数的可见性修饰
+ * java有public/protected/private/default
+ * Kotlin public/protected/private/internal
+ *
+ * Kotlin和java函数可见性修饰异同
+ * 1）private作用相同，但java中不加任何修饰符default是默认，Kotlin public是默认
+ *  public java需要显示声明，Kotlin默认就是public函数
+ *
+ * 2）java protected当前类 子类和当前路径下都可见，kotlin只对当前类和子类可见
+ * 3）Kotlin引入了internal只对同模块中的类可见
+ */
+
+/**
+ *7.kotlin中的数据类和单例类
  */
