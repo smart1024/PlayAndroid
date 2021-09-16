@@ -64,6 +64,14 @@ fun main(){
     for (fruit in newList1){
         println(fruit)
     }
+    //至少存在一个元素满足条件
+    val anyResult = list.any { it.length <= 5 }
+
+    //所有元素都满足条件
+    val allResult = list.all { it.length <= 5 }
+
+    println("anyResult == $anyResult")
+    println("allResult == $allResult")
 }
 
 /**
@@ -76,4 +84,5 @@ fun main(){
  *  2）集合中比较常用的函数式API（经常使用lambda表达式）
  *  1>map它用于将集合中的每个元素都映射成一个另外的值，映射的规则在Lambda表达式中指定，最终生成一个新的集合
  *  2>filter函数是用来过滤集合中的数据的，它可以单独使用，也可以配合刚才的map函数一起使用
+ *  3>any和all函数。其中any函数用于判断集合中是否至少存在一个元素满足指定条件，all函数用于判断集合中是否所有元素都满足条件
  */
