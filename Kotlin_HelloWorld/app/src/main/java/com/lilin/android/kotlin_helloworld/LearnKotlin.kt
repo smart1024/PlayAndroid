@@ -64,6 +64,15 @@ fun main(){
 
     val student = Student("Jack",19)
     doStudy(student)
+
+    // Kotlin data类的使用
+    val cp1 = Cellphone("Samsung",1299.99)
+    val cp2 = Cellphone("Samsung",1299.99)
+    println(cp1)
+    println("cp1==cp2 "+(cp1==cp2))
+
+    //Kotlin单例的调用
+    Singleton.singletonTest()
 }
 
 /**多态的使用*/
@@ -228,4 +237,8 @@ fun checkNumber(num:Number){
 
 /**
  *7.kotlin中的数据类和单例类
+ * 1）Kotlin会根据主构造函数中的参数帮你将equals()、hashCode()、toString()
+ * 2）当data类中没有代码，可以省略类后面{}
+ * 对比java类大大减少了代码量
+ * data class Cellphone(val brand:String,val price:Double)
  */
