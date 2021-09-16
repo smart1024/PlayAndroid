@@ -73,6 +73,26 @@ fun main(){
 
     //Kotlin单例的调用
     Singleton.singletonTest()
+
+    //Kotlin集合的创建
+    //list创建只读集合
+    val list = listOf("Apple","Orange","Pear")
+    for (fruit in list){
+        println(fruit)
+    }
+
+    //mutableListOf创建可变集合
+    val  list1 = mutableListOf("Apple","Orange","Pear")
+    list1.add("Banana")
+    for (fruit in list1){
+        println(fruit)
+    }
+
+    //Kotlin map的创建和变量
+    val map = mapOf("Apple" to 1,"Orange" to 2,"Pear" to 3)
+    for ((fruit,num) in map){
+        println("fruit is $fruit,num is $num")
+    }
 }
 
 /**多态的使用*/
@@ -241,4 +261,49 @@ fun checkNumber(num:Number){
  * 2）当data类中没有代码，可以省略类后面{}
  * 对比java类大大减少了代码量
  * data class Cellphone(val brand:String,val price:Double)
+ */
+
+/**
+ * 8.Kotlin的lambda编程
+ * 集合的创建与遍历
+ *
+ * 1)list的使用
+ * 按java的方式创建和初始化集合
+ * var list  = ArrayList()
+ * list.add("Apple")
+ * list.add("Orange")
+ * list.add("Pear")
+ *
+ * kotlin简化方式
+ *
+ * listOf创建的是不可变集合
+ * val list = listOf("Apple","Orange","Pear")
+ *
+ * //创建可变集合
+ * val list = mutableListOf("Apple","Orange","Pear")
+ *
+ * 2）setOf()和mutableSetOf()同样的道理
+ *
+ * 3）map
+ *
+ * //与java类似的写法
+ * val map = HashMap<String,Int>()
+ * map.put("Apple",1)
+ * map.put("Orange",2)
+ * map.put("Pear",3)
+ * 读取Kotlin推荐用角标访问
+ * //存数据
+ * map["Apple"] = 1
+ * //取数据
+ * val v = map["Apple"]
+ *
+ * 也可以这样初始化map
+ * map["Apple"] = 1
+ * map["Orange"] = 2
+ * map["Pear"] = 3
+ *
+ * //Kotlin简化写法
+ * val map = mapOf("Apple" to 1,"Orange" to 2,"Pear" to 3)
+ *
+ * 其中to是infix函数
  */
