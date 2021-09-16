@@ -58,6 +58,12 @@ fun main(){
     for (fruit in newList){
         println(fruit)
     }
+
+    //filter组合map使用
+    val newList1 = list.filter { it.length <= 5 }.map { it.uppercase() }
+    for (fruit in newList1){
+        println(fruit)
+    }
 }
 
 /**
@@ -69,4 +75,5 @@ fun main(){
  *
  *  2）集合中比较常用的函数式API（经常使用lambda表达式）
  *  1>map它用于将集合中的每个元素都映射成一个另外的值，映射的规则在Lambda表达式中指定，最终生成一个新的集合
+ *  2>filter函数是用来过滤集合中的数据的，它可以单独使用，也可以配合刚才的map函数一起使用
  */
