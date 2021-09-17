@@ -26,5 +26,7 @@ class SendActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         val inflate = ActivitySendBinding.inflate(layoutInflater)
         setContentView(inflate.root)
+//        调用的顶层方法
+        doSomething()
     }
 }

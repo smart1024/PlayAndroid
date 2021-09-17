@@ -16,7 +16,47 @@ with、run、apply
 1> with函数接收两个参数：1、一个任意类型的上下文对象 2、一个参数lambda表达式，返回值为lambda表达式最后一行代码的返回值
 with函数的作用：精简多次使用上下对象的场景 eatFruit1用法，返回值toString()的返回值
 2> run函数只接受一个lambda表达式作为参数并且只能在某个作为上下文对象上使用，其他特点同with函数
- 3> apply函数和run函数类似，只接受一个lambda参数，都要在作为上下文的某类型对象上使用，单apply函数无法指定返回值，返回值为对象自己
+3> apply函数和run函数类似，只接受一个lambda参数，都要在作为上下文的某类型对象上使用，单apply函数无法指定返回值，返回值为对象自己
+
+ 2、静态方法
+java方式
+ public class Util{
+    public static void doAction(){
+        System.out.println("do action");
+    }
+}
+
+ kotlin方式实现：通过单例类
+//kotlin这里不是静态方法，但是可以实现相同效果
+object Util{
+    fun doAction(){
+        println("do action")
+    }
+}
+
+ object 方式会将对象内部所有方法变成类似静态方法的调用方式
+  如果想某个方法这样该如何解决
+class Util{
+    fun doAction(){
+        println("do action")
+    }
+
+    companion object{ //联合对象,伴生类
+        fun doAction1(){
+            println("do action1")
+        }
+    }
+}
+
+ 当然以上两种Kotlin语法特性，能形式上实现java的静态方法调用效果，但并不是真正的静态方法，那有没有办法实现静态？
+
+ 有的
+ 注解和顶层方法
+1》@JvmStatic注解
+ 只能用在object单例类的方法上和伴生类的方法上
+2》 顶层方法:方法没有定义在类中，比如main方法，Kotlin编译器会将所有顶层方法编译为静态方法
+ Helper文件定义了一个顶层方法，可以直接在Kotlin代码中任意地方直接调用，但不能在java中直接使用，java中没这个概念，
+ 可以通过Helper.doSomething()这种方式使用
  *
  */
 
@@ -27,6 +67,8 @@ fun main(){
     eatFruit1(list)
     eatFruit2(list)
     eatFruit3(list)
+
+    Util.doAction1()
 }
 
 /**
