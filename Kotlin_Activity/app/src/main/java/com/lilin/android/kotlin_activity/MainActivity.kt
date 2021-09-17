@@ -1,6 +1,5 @@
 package com.lilin.android.kotlin_activity
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import com.lilin.android.kotlin_activity.databinding.ActivityMainBinding
