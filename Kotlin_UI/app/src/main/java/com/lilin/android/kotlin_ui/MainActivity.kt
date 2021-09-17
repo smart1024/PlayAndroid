@@ -7,6 +7,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.lilin.android.kotlin_ui.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
+    companion object{
+        //常量只能在伴生类、顶层函数、单例类中使用
+        const val TAG:String = "MainActivity"
+    }
     //1、这种方式所有用到adapter的地方都需要判空
 //    private var adapter:FruitAdapter? = null
     //2、告知Kotlin编译器 adapter 晚些时候会被初始化
