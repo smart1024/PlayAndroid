@@ -7,6 +7,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.lilin.android.kotlin_ui.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
+    //1、这种方式所有用到adapter的地方都需要判空
+//    private var adapter:FruitAdapter? = null
+    //2、告知Kotlin编译器 adapter 晚些时候会被初始化
+    private lateinit var adapter: FruitAdapter
     private val fruitList = ArrayList<Fruit>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -14,8 +18,14 @@ class MainActivity : AppCompatActivity() {
         val inflate = ActivityMainBinding.inflate(LayoutInflater.from(this))
         setContentView(inflate.root)
         initFruits()
+        adapter = FruitAdapter(fruitList)
         inflate.recyclerView.layoutManager = LinearLayoutManager(this)
-        inflate.recyclerView.adapter = FruitAdapter(fruitList)
+
+        if (::adapter.isInitialized){ //判断是否被初始化
+            inflate.recyclerView.adapter = adapter
+        }
+
+
     }
 
     private fun initFruits() {
