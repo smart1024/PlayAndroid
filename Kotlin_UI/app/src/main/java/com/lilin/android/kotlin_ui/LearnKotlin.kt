@@ -8,12 +8,47 @@ import java.lang.IllegalArgumentException
  * @version 1.0
  * 包名：
  * 类说明：
+ * fun getRandomLengthString(str:String):String{
+ *      val n = (1..20).random()
+ *      val builder = StringBuilder()
+ *      repeat(n){
+ *          builder.append(str)
+ *      }
+ *      return builder.toString()
+ * }
  */
 
 fun main(){
     getLetterCount()
     getLetterCount1()
     operaterOverride()
+    operaterOverride1()
+    operaterOverride2()
+
+    println(getRandomLengthString("hello"))
+}
+
+fun getRandomLengthString(str:String) = str * (1..20).random()
+
+/**
+ * 扩展函数中重载*运算符
+ */
+fun operaterOverride2() {
+    val str = "abc" * 3
+    println("abc*3 ==== $str")
+}
+
+/**
+ * in 实际调用的 contains
+ */
+fun operaterOverride1() {
+    if ("hello".contains("he")){
+        println("hello 包含 he")
+    }
+
+    if ("he" in "hello"){
+        println("he in hello")
+    }
 }
 
 /**

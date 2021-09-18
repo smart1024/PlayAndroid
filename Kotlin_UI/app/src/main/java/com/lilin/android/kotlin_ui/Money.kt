@@ -11,7 +11,7 @@ package com.lilin.android.kotlin_ui
 
 class Money(val value: Int) {
     /**
-     * Money类相加
+     * Money与Money类相加
      */
     operator fun plus(money:Money):Money{
         val sum = value + money.value
@@ -19,7 +19,7 @@ class Money(val value: Int) {
     }
 
     /**
-     * 加一个整形数字
+     * Money与一个整形数字相加
      */
     operator fun plus(newValue:Int):Money{
         val sum = value + newValue
