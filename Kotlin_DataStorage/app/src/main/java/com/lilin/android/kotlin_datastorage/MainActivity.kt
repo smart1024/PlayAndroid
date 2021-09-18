@@ -1,5 +1,6 @@
 package com.lilin.android.kotlin_datastorage
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -13,7 +14,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(inflate.root)
 
         inflate.button1.setOnClickListener {
-            Toast.makeText(this,"button1 clicked",Toast.LENGTH_SHORT).show()
+            startActivity(Intent(this,SharePreferenceActivity::class.java))
         }
 
         inflate.button2.setOnClickListener {
