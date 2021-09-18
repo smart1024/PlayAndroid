@@ -1,6 +1,7 @@
 package com.lilin.android.kotlin_ui
 
 import java.lang.IllegalArgumentException
+import java.lang.StringBuilder
 
 /**
  * 创建日期：2021/9/17 15:53
@@ -24,8 +25,51 @@ fun main(){
     operaterOverride()
     operaterOverride1()
     operaterOverride2()
-
     println(getRandomLengthString("hello"))
+
+    highOrderFunc()
+    highOrderFunc1()
+    highOrderFunc2()
+}
+
+fun highOrderFunc2() {
+    val list = listOf("Apple","Orange","Banana","Pear","Grape")
+    val result = StringBuilder().build { //lambda表达式最后一行最为函数返回值
+        append("start eating fruits.\n")
+        for (fruit in list){
+            append(fruit).append("\n")
+        }
+        append("eating all fruits.\n")
+    }
+
+}
+
+/**
+ * 使用Lambda表达式作为高阶函数的参数
+ */
+fun highOrderFunc1() {
+    val num1 = 100
+    val num2 = 80
+    val result1 = num1AndNum2(num1,num2){ num1,num2 ->
+        num1+num2
+    }
+    val result2 = num1AndNum2(num1,num2){ num1,num2 ->
+        num1-num2
+    }
+    println("highOrderFunc1 result1===$result1")
+    println("highOrderFunc1 result2===$result2")
+}
+
+/**
+ * ::表示函数引入,表示将plus函数和minus函数作为参数传递
+ */
+fun highOrderFunc() {
+    val num1 = 100
+    val num2 = 80
+    val result1 = num1AndNum2(num1,num2, ::plus)
+    val result2 = num1AndNum2(num1,num2, ::minus)
+    println("highOrderFunc result1===$result1")
+    println("highOrderFunc result2===$result2")
 }
 
 fun getRandomLengthString(str:String) = str * (1..20).random()
@@ -116,3 +160,53 @@ fun getResultMsg1(result: Result1) = when(result){
  * 3、运算符重载
  * 具体参见Money类
  */
+
+/**
+ * 4、高阶函数：能接收函数类型参数或者返回值为函数类型
+ *
+ * 函数类型的定义：
+ * (String,Int) -> Unit
+ *
+ * ->左边是参数列表，多个参数逗号隔开，无参数用()
+ * ->右边是函数返回值，无返回值使用Unit，相当于java的void
+ *  高阶函数举例
+ *
+ *  fun example(fuc:(String,Int)->Unit){
+ *      fuc("hello",123)
+ *  }
+ *  高阶函数允许让函数类型的参数来决定函数的执行逻辑
+ *
+ *  使用参见HighOrderFunction.kt
+ *
+ *  使用这种函数引用的写法虽然能够正常工作，
+ *  但是如果每次调用任何高阶函数的时候都还得先定义一个与其函数类型参数相匹配的函数，
+ *  这是不是有些太复杂了？
+ *
+ *  因此Kotlin引入了多种方式调用高阶函数
+ *  1》Lambda表达式：Lambda表达式作为最后一个参数，可以移到()外
+ *  2》匿名函数
+ *  3》成员引用
+ *
+ *  最后高阶函数接收函数参数是，实际上每次都是创建1个函数类型的对象，会造成内存和性能开销
+ *  因此引入高阶函数基本都会声明为inline(内联函数)，内联函数在Kotlin编译器的作用下，最终
+ *  被替换最终的操作
+ *
+ val result1 = num1AndNum2(num1,num2){ num1,num2 ->
+        num1+num2
+}
+ 被优化为 val result1 = num1+num2
+
+可以认为内联函数本质是代码的替换，不是真正意义上的函数
+见LearnKotlin1 printString()函数
+
+ 因此内联函数才能消除高阶函数带来的性能开销
+
+一个高阶函数中如果接收了两个或者更多函数类型的参数，
+这时我们给函数加上了inline关键字，
+那么Kotlin编译器会自动将所有引用的Lambda表达式全部进行内联
+ 怎么解决这个问题？使用noinline 声明该函数参数
+
+ inline fun funTest(block1:()->Unit,noinline block2:()->Unit){}
+现在Kotlin编译器只会对block1进行内联
+ */
+
