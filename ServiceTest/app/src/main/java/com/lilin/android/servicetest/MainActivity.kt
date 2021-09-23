@@ -5,10 +5,13 @@ import android.content.Context
 import android.content.Intent
 import android.content.ServiceConnection
 import android.os.Binder
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.IBinder
+import android.util.Log
 import android.view.LayoutInflater
+import androidx.core.app.JobIntentService
 import com.lilin.android.servicetest.databinding.ActivityMainBinding
 
 
@@ -21,6 +24,11 @@ import com.lilin.android.servicetest.databinding.ActivityMainBinding
  * Service都是运行在主线程中，不能处理耗时逻辑
  */
 class MainActivity : AppCompatActivity() {
+
+    companion object{
+        const val TAG = "MainActivity"
+    }
+
     lateinit var downloadBinder: MyService.DownloadBinder
 
     //匿名对象
@@ -41,9 +49,7 @@ class MainActivity : AppCompatActivity() {
         val inflate = ActivityMainBinding.inflate(LayoutInflater.from(this))
         setContentView(inflate.root)
         inflate.startService.setOnClickListener {
-//            val intent = Intent(this,MyService::class.java)
-//            startService(intent)
-            val intent = Intent(this,ForegroundService::class.java)
+            val intent = Intent(this,MyService::class.java)
             startService(intent)
         }
 
@@ -59,6 +65,25 @@ class MainActivity : AppCompatActivity() {
 
         inflate.unBindService.setOnClickListener {
             unbindService(connection)
+        }
+
+        inflate.startForgroundService.setOnClickListener {
+            val intent = Intent(this,ForegroundService::class.java)
+            startService(intent)
+        }
+
+        inflate.startIntentService.setOnClickListener {
+            Log.e(TAG,"Thread id is ${Thread.currentThread().name}")
+            val intent = Intent(this,MyIntentService::class.java)
+            startService(intent)
+        }
+        inflate.startJobIntentService.setOnClickListener {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){ //android 8.0以后
+                val jobId = 8
+                val intent = Intent()
+                intent.putExtra("name","ZhangSan")
+                JobIntentService.enqueueWork(this,MyJobIntentService::class.java,jobId,intent)
+            }
         }
     }
 }
