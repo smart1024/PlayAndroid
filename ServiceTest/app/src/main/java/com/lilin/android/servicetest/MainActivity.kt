@@ -17,6 +17,8 @@ import com.lilin.android.servicetest.databinding.ActivityMainBinding
  * 但是在启动了Service之后，Activity与Service基本就没有什么关系了
  * onBind方法是通信的桥梁
  * 实现了Service和Activity的绑定
+ *
+ * Service都是运行在主线程中，不能处理耗时逻辑
  */
 class MainActivity : AppCompatActivity() {
     lateinit var downloadBinder: MyService.DownloadBinder
