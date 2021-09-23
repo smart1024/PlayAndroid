@@ -51,4 +51,10 @@
         android:layout_height="wrap_content"
         android:text="Start JobIntentService"
         />
+    <Button
+        android:id="@+id/reifiedGenericType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="泛型实化进行跳转"
+        />
 </LinearLayout>

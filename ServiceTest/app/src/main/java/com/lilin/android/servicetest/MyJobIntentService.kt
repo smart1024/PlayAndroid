@@ -14,7 +14,7 @@ import androidx.core.app.JobIntentService
 
 /**
  * JobIntent Service内部是AsyncTask处理任务，基本上同IntentService
- * 已经过期
+ * 已经过期 交给JetPacket
  */
 class MyJobIntentService:JobIntentService() {
     companion object{

@@ -85,5 +85,10 @@ class MainActivity : AppCompatActivity() {
                 JobIntentService.enqueueWork(this,MyJobIntentService::class.java,jobId,intent)
             }
         }
+
+        //调用了自定义的泛型实化方法
+        inflate.reifiedGenericType.setOnClickListener {
+            startActivity<SecondActivity>(this)
+        }
     }
 }
