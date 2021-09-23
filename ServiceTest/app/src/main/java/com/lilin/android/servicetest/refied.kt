@@ -18,3 +18,13 @@ inline fun <reified T> startActivity(context: Context){
     val intent = Intent(context,T::class.java)
     context.startActivity(intent)
 }
+
+/**
+ * 携带参数的自定义泛型实化跳转方法
+ * 高阶函数就是接收函数作为参数
+ */
+inline fun <reified T> startActivity(context: Context,block:Intent.()->Unit){
+    val intent = Intent(context,T::class.java)
+    intent.block()
+    context.startActivity(intent)
+}

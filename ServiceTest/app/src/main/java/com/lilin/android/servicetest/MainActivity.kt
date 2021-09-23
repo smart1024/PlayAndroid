@@ -90,5 +90,12 @@ class MainActivity : AppCompatActivity() {
         inflate.reifiedGenericType.setOnClickListener {
             startActivity<SecondActivity>(this)
         }
+
+        inflate.reifiedGenericType1.setOnClickListener {
+            startActivity<SecondActivity>(this){
+                putExtra("name","LiSi")
+                putExtra("age","18")
+            }
+        }
     }
 }
