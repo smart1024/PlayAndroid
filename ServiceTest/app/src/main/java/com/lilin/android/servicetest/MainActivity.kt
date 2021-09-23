@@ -39,7 +39,9 @@ class MainActivity : AppCompatActivity() {
         val inflate = ActivityMainBinding.inflate(LayoutInflater.from(this))
         setContentView(inflate.root)
         inflate.startService.setOnClickListener {
-            val intent = Intent(this,MyService::class.java)
+//            val intent = Intent(this,MyService::class.java)
+//            startService(intent)
+            val intent = Intent(this,ForegroundService::class.java)
             startService(intent)
         }
 

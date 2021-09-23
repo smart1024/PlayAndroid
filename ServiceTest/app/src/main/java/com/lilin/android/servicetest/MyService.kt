@@ -6,6 +6,10 @@ import android.os.Binder
 import android.os.IBinder
 import android.util.Log
 
+/**
+ * Android8.0以后，后台运行的Service随时可能被系统回收，
+ * 前台service可以保持一致运行，因为状态栏可见
+ */
 class MyService : Service() {
     private val mBinder = DownloadBinder()
 
@@ -28,7 +32,7 @@ class MyService : Service() {
         Log.e(TAG,"onCreate")
     }
 
-    //onBind实现与Activity的通信
+    //onBind实现与Activity的通信，startBind后才会被调用
     override fun onBind(intent: Intent): IBinder {
         return mBinder
     }
