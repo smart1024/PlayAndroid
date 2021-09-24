@@ -1,5 +1,10 @@
 package com.lilin.android.retrofittest
 
+import android.text.TextUtils
+import okhttp3.FormBody
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import okhttp3.RequestBody
 import java.io.BufferedReader
 import java.io.InputStreamReader
 import java.lang.StringBuilder
@@ -44,5 +49,25 @@ object HttpUtil {
                 connection?.disconnect()
             }
         }
+    }
+
+    /**
+     * Okhttp不指定默认get请求
+     */
+    fun request(method: String,url:String,callback: okhttp3.Callback){
+        val client = OkHttpClient.Builder().addNetworkInterceptor(LoggingInterceptor()).build()
+        val requestBuilder:Request.Builder
+        if (TextUtils.equals(method, GET)){
+            requestBuilder = Request.Builder().get()
+        }else if(TextUtils.equals(method, POST)){
+            val requestBody = FormBody.Builder().add("name","ZhangSan").build()
+            requestBuilder = Request.Builder().post(requestBody)
+        }else{
+            requestBuilder = Request.Builder().get()
+        }
+        val build = requestBuilder.url(url).build()
+
+        //call入列
+        client.newCall(build).enqueue(callback)
     }
 }
