@@ -6,12 +6,13 @@ import android.text.TextUtils
 import android.util.Log
 import android.view.LayoutInflater
 import com.fasterxml.jackson.core.type.TypeReference
-import com.fasterxml.jackson.databind.JavaType
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.lilin.android.retrofittest.databinding.ActivityMainBinding
 import okhttp3.Call
 import okhttp3.Response
-import retrofit2.http.POST
+import retrofit2.Callback
+import retrofit2.Retrofit
+import retrofit2.converter.jackson.JacksonConverterFactory
 import java.io.IOException
 import java.lang.Exception
 
@@ -22,7 +23,6 @@ class MainActivity : AppCompatActivity() {
     private val objectMapper = ObjectMapper()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//        setContentView(R.layout.activity_main)
         val inflate = ActivityMainBinding.inflate(LayoutInflater.from(this))
         setContentView(inflate.root)
 
@@ -63,7 +63,28 @@ class MainActivity : AppCompatActivity() {
             })
         }
         inflate.btn3.setOnClickListener {
+            val baseUrl = "https://api.muxiaoguo.cn/"
+            val retrofit = Retrofit.Builder()
+                .baseUrl(baseUrl)
+                .addConverterFactory(JacksonConverterFactory.create())
+                .build()
 
+            val appService = retrofit.create(AppService::class.java)
+
+            appService.getHistoryData().enqueue(object: Callback<CommonResponse<List<History>>> {
+                override fun onResponse(
+                    call: retrofit2.Call<CommonResponse<List<History>>>,
+                    response: retrofit2.Response<CommonResponse<List<History>>>
+                ) {
+                    Log.e(TAG,response.body().toString())
+                    Log.e(TAG,"${response.body()?.data?.size}")
+                }
+
+                override fun onFailure(call: retrofit2.Call<CommonResponse<List<History>>>, t: Throwable) {
+                    t.printStackTrace()
+                }
+
+            })
         }
     }
 

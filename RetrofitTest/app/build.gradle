@@ -45,10 +45,9 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlin_coroutines"
     // Android 平台需要额外导入 kotlinx-coroutines-android
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$kotlin_coroutines"
-//    implementation 'com.squareup.okhttp3:okhttp:4.9.1'
     //retrofit是基于okhttp开发的，会自动引入okhttp，okio这些库
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
-//    implementation 'com.squareup.retrofit2:converter-jackson:2.9.0'
+    implementation 'com.squareup.retrofit2:converter-jackson:2.9.0'
     implementation 'com.fasterxml.jackson.core:jackson-core:2.10.1'
     implementation 'com.fasterxml.jackson.core:jackson-annotations:2.10.1'
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.10.1'
