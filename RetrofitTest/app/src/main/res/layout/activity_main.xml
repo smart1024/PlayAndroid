@@ -31,4 +31,20 @@
         app:layout_constraintLeft_toLeftOf="parent"
         />
 
+    <Button
+        android:id="@+id/btn4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="retrofit单例类开始请求"
+        app:layout_constraintTop_toBottomOf="@id/btn3"
+        app:layout_constraintLeft_toLeftOf="parent"
+        />
+    <Button
+        android:id="@+id/btn5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="retrofit泛型参数实化开始请求"
+        app:layout_constraintTop_toBottomOf="@id/btn4"
+        app:layout_constraintLeft_toLeftOf="parent"
+        />
 </androidx.constraintlayout.widget.ConstraintLayout>

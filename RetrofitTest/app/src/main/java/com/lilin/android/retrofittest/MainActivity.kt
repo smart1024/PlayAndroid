@@ -86,6 +86,48 @@ class MainActivity : AppCompatActivity() {
 
             })
         }
+
+        inflate.btn4.setOnClickListener {
+            val appService = ServiceCreator.create(AppService::class.java)
+            appService.getHistoryData().enqueue(object :Callback<CommonResponse<List<History>>>{
+                override fun onResponse(
+                    call: retrofit2.Call<CommonResponse<List<History>>>,
+                    response: retrofit2.Response<CommonResponse<List<History>>>
+                ) {
+                    Log.e(TAG,response.body().toString())
+                    Log.e(TAG,"${response.body()?.data?.size}")
+                }
+
+                override fun onFailure(
+                    call: retrofit2.Call<CommonResponse<List<History>>>,
+                    t: Throwable
+                ) {
+                    t.printStackTrace()
+                }
+
+            })
+        }
+
+        inflate.btn5.setOnClickListener { //使用参数实化来优化实例创建
+            val appService = ServiceCreator.create<AppService>()
+            appService.getHistoryData().enqueue(object :Callback<CommonResponse<List<History>>>{
+                override fun onResponse(
+                    call: retrofit2.Call<CommonResponse<List<History>>>,
+                    response: retrofit2.Response<CommonResponse<List<History>>>
+                ) {
+                    Log.e(TAG,response.body().toString())
+                    Log.e(TAG,"${response.body()?.data?.size}")
+                }
+
+                override fun onFailure(
+                    call: retrofit2.Call<CommonResponse<List<History>>>,
+                    t: Throwable
+                ) {
+                    t.printStackTrace()
+                }
+
+            })
+        }
     }
 
 }
