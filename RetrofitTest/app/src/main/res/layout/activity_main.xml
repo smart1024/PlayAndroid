@@ -47,4 +47,12 @@
         app:layout_constraintTop_toBottomOf="@id/btn4"
         app:layout_constraintLeft_toLeftOf="parent"
         />
+    <Button
+        android:id="@+id/btn6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="使用suspendCoroutine函数实现匿名回调的复用"
+        app:layout_constraintTop_toBottomOf="@id/btn5"
+        app:layout_constraintLeft_toLeftOf="parent"
+        />
 </androidx.constraintlayout.widget.ConstraintLayout>

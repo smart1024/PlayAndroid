@@ -1,16 +1,18 @@
 package com.lilin.android.retrofittest
 
 import android.text.TextUtils
-import okhttp3.FormBody
-import okhttp3.OkHttpClient
-import okhttp3.Request
-import okhttp3.RequestBody
+import okhttp3.*
 import java.io.BufferedReader
+import java.io.IOException
 import java.io.InputStreamReader
+import java.lang.RuntimeException
 import java.lang.StringBuilder
 import java.net.HttpURLConnection
 import java.net.URL
 import kotlin.concurrent.thread
+import kotlin.coroutines.resume
+import kotlin.coroutines.resumeWithException
+import kotlin.coroutines.suspendCoroutine
 
 /**
  * 创建日期：2021/9/24 10:13
@@ -54,7 +56,7 @@ object HttpUtil {
     /**
      * Okhttp不指定默认get请求
      */
-    fun request(method: String,url:String,callback: okhttp3.Callback){
+    fun request(method: String,url:String,callback: Callback){
         val client = OkHttpClient.Builder().addNetworkInterceptor(LoggingInterceptor()).build()
         val requestBuilder:Request.Builder
         if (TextUtils.equals(method, GET)){
@@ -69,5 +71,25 @@ object HttpUtil {
 
         //call入列
         client.newCall(build).enqueue(callback)
+    }
+
+    /**
+     * 使用suspendCoroutine函数实现匿名回调的复用
+     * request执行return后协程会挂起，网络请求线程会继续执行，请求返回后，协程被唤醒返回给调用处
+     */
+    suspend fun request(method: String,url: String):String{
+        return suspendCoroutine { continuation ->
+            request(method,url,object :Callback{
+                override fun onFailure(call: Call, e: IOException) {
+                    continuation.resumeWithException(e)
+                }
+
+                override fun onResponse(call: Call, response: Response) {
+                    if (response.body() == null) continuation.resumeWithException(RuntimeException("response.body() == null"))
+                    continuation.resume(response.body()!!.string())
+                }
+
+            })
+        }
     }
 }

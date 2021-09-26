@@ -8,6 +8,8 @@ import android.view.LayoutInflater
 import com.fasterxml.jackson.core.type.TypeReference
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.lilin.android.retrofittest.databinding.ActivityMainBinding
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.runBlocking
 import okhttp3.Call
 import okhttp3.Response
 import retrofit2.Callback
@@ -128,6 +130,24 @@ class MainActivity : AppCompatActivity() {
 
             })
         }
+
+        inflate.btn6.setOnClickListener {
+            runBlocking {
+                getHistoryData()
+            }
+        }
     }
 
+    /**
+     * suspendCoroutine函数的使用可实现匿名回调的复用
+     */
+    suspend fun getHistoryData(){
+        try {
+            val url = "https://api.muxiaoguo.cn/api/lishijr"
+            val response = HttpUtil.request(HttpUtil.GET,url)
+            println(response)
+        }catch (e:Exception){
+            e.printStackTrace()
+        }
+    }
 }
