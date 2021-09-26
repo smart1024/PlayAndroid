@@ -8,7 +8,8 @@ import android.view.LayoutInflater
 import com.fasterxml.jackson.core.type.TypeReference
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.lilin.android.retrofittest.databinding.ActivityMainBinding
-import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import okhttp3.Call
 import okhttp3.Response
@@ -17,6 +18,10 @@ import retrofit2.Retrofit
 import retrofit2.converter.jackson.JacksonConverterFactory
 import java.io.IOException
 import java.lang.Exception
+import java.lang.RuntimeException
+import kotlin.coroutines.resume
+import kotlin.coroutines.resumeWithException
+import kotlin.coroutines.suspendCoroutine
 
 class MainActivity : AppCompatActivity() {
     companion object{
@@ -136,8 +141,38 @@ class MainActivity : AppCompatActivity() {
                 getHistoryData()
             }
         }
+
+        inflate.btn7.setOnClickListener {
+            GlobalScope.launch {
+                try {
+                    val appData = ServiceCreator.create<AppService>().getHistoryData().await()
+                    Log.e(TAG,"$appData")
+                }catch (e:Exception){
+                    e.printStackTrace()
+                }
+            }
+        }
     }
 
+    /**
+     * 定义Call的扩展函数await()
+     */
+    suspend fun <T> retrofit2.Call<T>.await():T{
+        return suspendCoroutine { continuation ->
+            enqueue(object : Callback<T> {
+                override fun onResponse(call: retrofit2.Call<T>, response: retrofit2.Response<T>) {
+                    val body = response.body()
+                    if (body == null) continuation.resumeWithException(RuntimeException("body == null"))
+                    continuation.resume(body!!)
+                }
+
+                override fun onFailure(call: retrofit2.Call<T>, t: Throwable) {
+                    continuation.resumeWithException(t)
+                }
+
+            })
+        }
+    }
     /**
      * suspendCoroutine函数的使用可实现匿名回调的复用
      */
