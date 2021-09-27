@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.JetpackTest">
         <activity
+            android:name=".LiveDataActivity"
+            android:exported="true" />
+        <activity
             android:name=".LifecycleActivity"
             android:exported="true" />
         <activity

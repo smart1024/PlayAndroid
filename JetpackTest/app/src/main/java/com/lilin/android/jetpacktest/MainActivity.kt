@@ -41,6 +41,10 @@ class MainActivity : AppCompatActivity() {
         inflate.lifecycle.setOnClickListener {
             startActivity(Intent(this,LifecycleActivity::class.java))
         }
+
+        inflate.liveData.setOnClickListener {
+            startActivity(Intent(this,LiveDataActivity::class.java))
+        }
     }
 
     private fun refreshCounter() {
