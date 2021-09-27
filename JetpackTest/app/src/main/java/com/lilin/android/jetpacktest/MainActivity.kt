@@ -45,6 +45,10 @@ class MainActivity : AppCompatActivity() {
         inflate.liveData.setOnClickListener {
             startActivity(Intent(this,LiveDataActivity::class.java))
         }
+
+        inflate.swichMapliveData.setOnClickListener {
+            startActivity(Intent(this,SwitchMapActivity::class.java))
+        }
     }
 
     private fun refreshCounter() {

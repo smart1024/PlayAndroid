@@ -59,4 +59,15 @@
         android:layout_marginTop="20dp"
         android:text="LiveData组件的使用"
         />
+
+    <Button
+        android:id="@+id/swichMapliveData"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/lifecycle"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="20dp"
+        android:text="switchMap方法的使用"
+        />
 </androidx.constraintlayout.widget.ConstraintLayout>
