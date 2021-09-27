@@ -1,5 +1,6 @@
 package com.lilin.android.jetpacktest
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
@@ -12,20 +13,23 @@ import androidx.lifecycle.ViewModel
  */
 
 /**
- * counter破坏了LiveData的封装性
+ * 让ViewModel外部只能读LiveData
  */
-class LiveDataModel(countReserved:Int):ViewModel() {
-    val counter = MutableLiveData<Int>()
+class LiveDataModel1(countReserved:Int):ViewModel() {
+
+    val counter:LiveData<Int> get() = _counter
+
+    private val _counter = MutableLiveData<Int>()
     init {
-        counter.value = countReserved
+        _counter.value = countReserved
     }
 
     fun plusOne(){
         val count = counter.value ?: 0
-        counter.value = count+1
+        _counter.value = count+1
     }
 
     fun clear(){
-        counter.value = 0
+        _counter.value = 0
     }
 }
