@@ -8,6 +8,7 @@ import java.lang.StringBuilder
  * @version 1.0
  * 包名： com.lilin.android.kotlin_dsl
  * 类说明：
+ *
  */
 
 
@@ -24,6 +25,9 @@ class Dependency {
     }
 }
 
+/**
+ * Dependency.() 表明block函数定义在Dependency类中
+ */
 fun dependencies(block:Dependency.()->Unit):List<String>{
     val dependency = Dependency()
     dependency.block()
@@ -57,6 +61,7 @@ class Tr{
 class Table{
     private val children = ArrayList<Tr>()
 
+    /**block定义在Tr类中*/
     fun tr(block: Tr.() -> Unit){
         val tr = Tr()
         tr.block()
@@ -77,7 +82,7 @@ class Table{
 /**
  * 进一步优化表格的创建
  * ClassName.表示block函数在哪个类中定义的，传入的lambda表达式就拥有该类的上下文
- * 此例中拥有Table类的上下文
+ * 此例中拥有Table类的上下文此时block定义在Table类中
  */
 fun table(block: Table.() -> Unit):String{
     val table = Table()
