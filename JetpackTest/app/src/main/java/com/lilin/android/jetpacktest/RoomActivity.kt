@@ -21,6 +21,8 @@ class RoomActivity : AppCompatActivity() {
         val user2 = User("Tom","Hanks",63)
         inflate.addDataBtn.setOnClickListener {
             thread {
+                //将insertUser()方法返回的主键id值赋值给原来的User对象。之所以要这么做，
+                // 是因为使用@Update和@Delete注解去更新和删除数据时都是基于这个id值来操作的
                 user1.id = userDao.insertUser(user1)
                 user2.id = userDao.insertUser(user2)
             }
