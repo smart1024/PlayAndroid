@@ -25,16 +25,23 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 /**
  * 升级数据库
  */
-@Database(version = 2,entities = [User::class,Book::class])
+@Database(version = 3,entities = [User::class,Book::class])
 abstract class AppDataBase :RoomDatabase() {
     abstract fun userDao():UserDao
 
     abstract fun bookDao():BookDao
 
     companion object{ //单例
+
         val MIGRATION_1_2 = object : Migration(1,2) {
             override fun migrate(database: SupportSQLiteDatabase) {
                 database.execSQL("create table Book (id Integer primary key autoincrement not null,name text not null,pages Integer not null)")
+            }
+        }
+
+        val MIGRATION_2_3 = object : Migration(2,3) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                database.execSQL("alter table Book add column author text not null default 'unknown'")
             }
         }
 
@@ -48,7 +55,7 @@ abstract class AppDataBase :RoomDatabase() {
             //apply返回传入的对象本身
             //context.applicationContext 不会出现内测泄漏
             return Room.databaseBuilder(context.applicationContext,AppDataBase::class.java,"app_database").addMigrations(
-                MIGRATION_1_2)
+                MIGRATION_1_2, MIGRATION_2_3)
 //                .fallbackToDestructiveMigration() //会销毁数据库，重新创建
                 .build().apply {
                 instance = this
