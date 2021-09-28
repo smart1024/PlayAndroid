@@ -4,6 +4,8 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.migration.Migration
+import androidx.sqlite.db.SupportSQLiteDatabase
 
 /**
  * 创建日期：2021/9/28 10:55
@@ -20,10 +22,22 @@ import androidx.room.RoomDatabase
  * 具体的方法实现是由Room在底层自动完成的
  */
 
-@Database(version = 1,entities = [User::class])
+/**
+ * 升级数据库
+ */
+@Database(version = 2,entities = [User::class,Book::class])
 abstract class AppDataBase :RoomDatabase() {
     abstract fun userDao():UserDao
+
+    abstract fun bookDao():BookDao
+
     companion object{ //单例
+        val MIGRATION_1_2 = object : Migration(1,2) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                database.execSQL("create table Book (id Integer primary key autoincrement not null,name text not null,pages Integer not null)")
+            }
+        }
+
         private var instance:AppDataBase?=null
 
         @Synchronized
@@ -33,7 +47,10 @@ abstract class AppDataBase :RoomDatabase() {
             }
             //apply返回传入的对象本身
             //context.applicationContext 不会出现内测泄漏
-            return Room.databaseBuilder(context.applicationContext,AppDataBase::class.java,"app_database").build().apply {
+            return Room.databaseBuilder(context.applicationContext,AppDataBase::class.java,"app_database").addMigrations(
+                MIGRATION_1_2)
+//                .fallbackToDestructiveMigration() //会销毁数据库，重新创建
+                .build().apply {
                 instance = this
             }
         }
