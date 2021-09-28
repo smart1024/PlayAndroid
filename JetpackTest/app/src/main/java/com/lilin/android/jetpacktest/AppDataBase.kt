@@ -24,6 +24,8 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 
 /**
  * 升级数据库
+ * Mysql修改表字段的
+ * http://c.biancheng.net/view/2433.html
  */
 @Database(version = 3,entities = [User::class,Book::class])
 abstract class AppDataBase :RoomDatabase() {

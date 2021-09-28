@@ -53,6 +53,10 @@ class MainActivity : AppCompatActivity() {
         inflate.roomBtn.setOnClickListener {
             startActivity(Intent(this,RoomActivity::class.java))
         }
+
+        inflate.workManagerBtn.setOnClickListener {
+            startActivity(Intent(this,WorkManagerActivity::class.java))
+        }
     }
 
     private fun refreshCounter() {
