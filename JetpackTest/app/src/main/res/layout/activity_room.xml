@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".RoomActivity">
+    <Button
+        android:id="@+id/getUserBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Get User"
+        android:textAllCaps="false"
+        />
+    <Button
+        android:id="@+id/addDataBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add Data"
+        android:textAllCaps="false"
+        />
+    <Button
+        android:id="@+id/updateDataBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Update Data"
+        android:textAllCaps="false"
+        />
+    <Button
+        android:id="@+id/deleteDataBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Delete Data"
+        android:textAllCaps="false"
+        />
+    <Button
+        android:id="@+id/queryDataBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Query Data"
+        android:textAllCaps="false"
+        />
+</LinearLayout>
