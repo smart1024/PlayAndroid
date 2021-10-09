@@ -1,8 +1,8 @@
-package com.lilin.android.todayinformation;
+package com.lilin.android.todayinformation
 
-import android.content.Context;
-import android.util.AttributeSet;
-import android.widget.VideoView;
+import android.content.Context
+import android.util.AttributeSet
+import android.widget.VideoView
 
 /**
  * 创建日期：2021/10/9 10:38
@@ -12,19 +12,14 @@ import android.widget.VideoView;
  * 包名： com.lilin.android.todayinformation
  * 类说明：
  */
-
-public class FullScreenVideoView extends VideoView {
-    public FullScreenVideoView(Context context) {
-        super(context);
-    }
-
-    public FullScreenVideoView(Context context, AttributeSet attrs) {
-        super(context, attrs);
-    }
-
-    public FullScreenVideoView(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
-    }
+class FullScreenVideoView : VideoView {
+    constructor(context: Context?) : super(context)
+    constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs)
+    constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) : super(
+        context,
+        attrs,
+        defStyleAttr
+    )
 
     /**
      * super.onMeasure(widthMeasureSpec, heightMeasureSpec)
@@ -32,11 +27,10 @@ public class FullScreenVideoView extends VideoView {
      * @param widthMeasureSpec
      * @param heightMeasureSpec
      */
-    @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+    override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
 //        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        int measureWidth = getDefaultSize(0, widthMeasureSpec);
-        int measureHeight = getDefaultSize(0, heightMeasureSpec);
-        setMeasuredDimension(measureWidth,measureHeight);
+        val measureWidth = getDefaultSize(0, widthMeasureSpec)
+        val measureHeight = getDefaultSize(0, heightMeasureSpec)
+        setMeasuredDimension(measureWidth, measureHeight)
     }
 }
