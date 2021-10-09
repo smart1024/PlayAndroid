@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="FullScreen" parent="Theme.TodayInformation" >
+        <item name="android:windowFullscreen">true</item>
+    </style>
+
+<!--    抽取style可以达到复用的效果-->
+    <style name="video_view_style">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+    </style>
+</resources>
