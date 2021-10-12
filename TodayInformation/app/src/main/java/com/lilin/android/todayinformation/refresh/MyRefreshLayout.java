@@ -5,11 +5,16 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.GridView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.ScrollView;
 
 import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * 创建日期：2021/10/12 13:57
@@ -38,6 +43,8 @@ public class MyRefreshLayout extends LinearLayout {
     private BaseRefreshHeaderManager mRefreshManager;
     private RefreshState mCurrentRefreshState = RefreshState.IDLE;
     private onRefreshListener mOnRefreshListener;
+    private float downY;
+
     public MyRefreshLayout(Context context) {
         this(context,null);
     }
@@ -80,7 +87,63 @@ public class MyRefreshLayout extends LinearLayout {
         mRefreshManager = manager;
     }
 
-    private float downY;
+    float interceptDownY;
+    float interceptDownX;
+    /**
+     * 处理触摸事件被子控件消费，导致MyRefreshLayout无法获得触摸事件
+     */
+    @Override
+    public boolean onInterceptTouchEvent(MotionEvent ev) {
+        switch (ev.getAction()){
+            case MotionEvent.ACTION_DOWN:
+                interceptDownY = ev.getY();
+                interceptDownX = ev.getX();
+                break;
+            case MotionEvent.ACTION_MOVE:
+                float dy = ev.getY() - interceptDownY;
+                float dx = ev.getX() - interceptDownX;
+                if (dy > 0 && dy > Math.abs(dx)){ //竖向滑动
+                    if (handleChildViewTop()){ //判断子view是否滚动到顶部
+                        return true;
+                    }
+                }
+                break;
+            case MotionEvent.ACTION_UP:
+                break;
+            default:
+                break;
+        }
+        return super.onInterceptTouchEvent(ev);
+    }
+
+    private boolean handleChildViewTop() {
+        View view = getChildAt(1);
+        Log.e("handleChildViewTop",view+"");
+        if (view instanceof ScrollView){
+            return RefreshScrollingUtil.isScrollViewOrWebViewToTop(view);
+        }
+
+        if (view instanceof RecyclerView){
+            return RefreshScrollingUtil.isRecyclerViewToTop((RecyclerView) view);
+        }
+
+        if (view instanceof ListView){
+            return RefreshScrollingUtil.isAbsListViewToTop((ListView)view);
+        }
+
+        if (view instanceof GridView){
+            return RefreshScrollingUtil.isAbsListViewToTop((GridView)view);
+        }
+        return false;
+    }
+
+//    @Override
+//    protected void onFinishInflate() {
+//        super.onFinishInflate();
+//        View view = getChildAt(1);
+//        Log.e("onFinishInflate",view+"");
+//    }
+
     /**
      * 处理触摸事件
      * @param event
@@ -94,9 +157,17 @@ public class MyRefreshLayout extends LinearLayout {
                 return true;
             case MotionEvent.ACTION_MOVE:
                 float moveY = event.getY();
+                if (downY == 0){
+                    downY = interceptDownY;
+                }
+                Log.e("moveY===",moveY+"");
+                Log.e("downY===",downY+"");
+
                 float dy = moveY - downY;
+                Log.e("dy==",dy+"");
                 if (dy > 0){ //改变HeaderView的布局
                     int topMargin = (int) Math.min(dy / 2.0f + minHeaderViewHeight, maxHeaderViewHeight);
+
                     if (topMargin < 0 && mCurrentRefreshState == RefreshState.IDLE){//下拉过程中headerView还没完全显示
                         mCurrentRefreshState = RefreshState.PULLING_DOWN;
                         handleRefreshState();
@@ -104,6 +175,9 @@ public class MyRefreshLayout extends LinearLayout {
                         mCurrentRefreshState = RefreshState.RELEASE;
                         handleRefreshState();
                     }
+                    Log.e("topMargin===",topMargin+"");
+                    Log.e("onTouchEvent===",mCurrentRefreshState+"");
+
                     LayoutParams params = (LayoutParams) mHeaderView.getLayoutParams();
                     //除以1.8实现阻尼效果，默认是线性变化
                     params.topMargin = topMargin;
@@ -143,6 +217,7 @@ public class MyRefreshLayout extends LinearLayout {
      * @return
      */
     private boolean handleEventUp() {
+        Log.e("handleEventUp",mCurrentRefreshState+"");
         LinearLayout.LayoutParams params = (LayoutParams) mHeaderView.getLayoutParams();
         if (mCurrentRefreshState == RefreshState.PULLING_DOWN){//下拉过程中抬起，则隐藏header
             hideHeaderView(params);
