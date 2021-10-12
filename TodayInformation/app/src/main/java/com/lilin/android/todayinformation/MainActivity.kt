@@ -1,5 +1,6 @@
 package com.lilin.android.todayinformation
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -21,6 +22,10 @@ class MainActivity : AppCompatActivity() {
         inflate.lav2.setOnClickListener {
             inflate.lav2.playAnimation()
             inflate.lav1.reverseAnimationSpeed()
+        }
+
+        inflate.btnRefreshView.setOnClickListener {
+            startActivity(Intent(this,RefreshActivity::class.java))
         }
     }
 }

@@ -24,7 +24,7 @@ class SplashActivity : AppCompatActivity() {
         }
 
         inflate.tvCountDown.isEnabled = false
-        timer = CustomCountDownTimer(5,1000,object :CustomCountDownTimer.ICountDownHandler{
+        timer = CustomCountDownTimer(3,1000,object :CustomCountDownTimer.ICountDownHandler{
             override fun onTick(time: Long) {
                 inflate.tvCountDown.text = "$time S"
             }
@@ -39,6 +39,7 @@ class SplashActivity : AppCompatActivity() {
 
         inflate.tvCountDown.setOnClickListener {
             startActivity(Intent(this,MainActivity::class.java))
+            finish()
         }
     }
 
