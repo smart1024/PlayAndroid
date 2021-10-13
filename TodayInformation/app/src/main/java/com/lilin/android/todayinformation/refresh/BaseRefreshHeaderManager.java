@@ -30,4 +30,6 @@ public abstract class BaseRefreshHeaderManager {
     public abstract void release();
 
     public abstract void refreshing();
+
+    public void pullDownPercent(float percent){}
 }

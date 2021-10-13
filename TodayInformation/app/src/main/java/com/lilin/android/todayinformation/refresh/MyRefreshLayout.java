@@ -55,6 +55,7 @@ public class MyRefreshLayout extends LinearLayout {
 
     public MyRefreshLayout(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        setOrientation(LinearLayout.VERTICAL);
         initView();
     }
 
@@ -64,7 +65,6 @@ public class MyRefreshLayout extends LinearLayout {
      * 设置topMargin为HeaderView高度的负数，实现默认屏幕内不可见
      */
     private void initView() {
-        setOrientation(LinearLayout.VERTICAL);
         if (mRefreshManager == null){
             mRefreshManager = new DefaultRefreshHeaderManager(getContext());
         }
@@ -85,6 +85,8 @@ public class MyRefreshLayout extends LinearLayout {
      */
     public void setRefreshManager(BaseRefreshHeaderManager manager){
         mRefreshManager = manager;
+        removeViewAt(0);
+        initView();
     }
 
     float interceptDownY;
@@ -104,6 +106,7 @@ public class MyRefreshLayout extends LinearLayout {
                 float dx = ev.getX() - interceptDownX;
                 if (dy > 0 && dy > Math.abs(dx)){ //竖向滑动
                     if (handleChildViewTop()){ //判断子view是否滚动到顶部
+                        Log.e("handleChildViewTop==","true");
                         return true;
                     }
                 }
@@ -151,22 +154,26 @@ public class MyRefreshLayout extends LinearLayout {
      */
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        switch (event.getAction()){
+        switch (event.getAction()){ //没有拦截子View的ACTION_DOWN事件，downY可能会没有获取到值
             case MotionEvent.ACTION_DOWN:
-                downY = event.getY();
+//                downY = event.getY();
+//                Log.e("onTouchEvent downY", downY+"");
                 return true;
-            case MotionEvent.ACTION_MOVE:
+            case MotionEvent.ACTION_MOVE: //向下MOVE时会拦截子View的MOVE事件，第一次移动可认为是downY起点
                 float moveY = event.getY();
-                if (downY == 0){
-                    downY = interceptDownY;
-                }
-                Log.e("moveY===",moveY+"");
-                Log.e("downY===",downY+"");
-
+                downY = interceptDownY;
+                Log.e("moveY==",moveY+"");
+                Log.e("downY==",downY+"");
                 float dy = moveY - downY;
                 Log.e("dy==",dy+"");
                 if (dy > 0){ //改变HeaderView的布局
                     int topMargin = (int) Math.min(dy / 2.0f + minHeaderViewHeight, maxHeaderViewHeight);
+
+                    if (topMargin <= 0){//处理图片缩放比例
+                        //比例从0~1变化
+                        float scale = (mHeaderViewHeight + topMargin)*1.0f/mHeaderViewHeight;
+                        mRefreshManager.pullDownPercent(scale);
+                    }
 
                     if (topMargin < 0 && mCurrentRefreshState == RefreshState.IDLE){//下拉过程中headerView还没完全显示
                         mCurrentRefreshState = RefreshState.PULLING_DOWN;
@@ -209,6 +216,8 @@ public class MyRefreshLayout extends LinearLayout {
             case REFRESHING:
                 mRefreshManager.refreshing();
                 break;
+            default:
+                break;
         }
     }
 
@@ -225,11 +234,13 @@ public class MyRefreshLayout extends LinearLayout {
             params.topMargin = 0;
             mHeaderView.setLayoutParams(params);
             mCurrentRefreshState = RefreshState.REFRESHING;
+            handleRefreshState();
             if (mOnRefreshListener != null){
                 mOnRefreshListener.onRefresh();
             }
         }
-        return true;
+        //默认情况headerView隐藏topMargin=minHeaderViewHeight,下拉后topMargin>minHeaderViewHeight
+        return params.topMargin > minHeaderViewHeight;
     }
 
     public void hideHeaderView(LayoutParams params) {
@@ -249,7 +260,7 @@ public class MyRefreshLayout extends LinearLayout {
                 handleRefreshState();
             }
         });
-        animator.setDuration(800);
+        animator.setDuration(500);
         animator.start();
     }
 
