@@ -39,5 +39,13 @@ public class Practice4DrawPointView extends View {
 
         paint.setStrokeCap(Paint.Cap.SQUARE);
         canvas.drawPoint(500,200,paint);
+
+        paint.setStrokeCap(Paint.Cap.ROUND);
+        paint.setStrokeWidth(10);
+        paint.setColor(Color.RED);
+
+        float[] pts = {0, 0, 50, 50, 50, 100, 100, 50, 100, 100, 150, 50, 150, 100};
+        //跳过前两个0，绘制8个数，也就是4个点
+        canvas.drawPoints(pts,2,8, paint);
     }
 }
